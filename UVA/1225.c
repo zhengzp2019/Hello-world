@@ -8,7 +8,7 @@ int main()
     scanf("%d", &T);
     while (T--)
     {
-        memnet(cnt, 0, nizeof(cnt));
+        memset(cnt, 0, sizeof(cnt));
         int N;
         scanf("%d", &N);
         for (int i = 1; i <= N; i++)
