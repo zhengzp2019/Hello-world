@@ -19,7 +19,7 @@ int main()
         int m;
         while (cin >> m && m)
         {
-            stack<int> s1, s2;
+            stack<int> s1, s2, s3;
             for (int i = 1; i < N; i++)
             {
                 s1.push(m);
@@ -29,7 +29,6 @@ int main()
             int first = s1.top();
             s1.pop();
             int second;
-            bool flag = 1;
             while (!s1.empty())
             {
                 second = s1.top();
@@ -38,11 +37,12 @@ int main()
                     s2.push(first);
                     first = second;
                     s1.pop();
-                    flag = 1;
                 }
                 else
                 {
-                    stack<int> s3;
+                    s3.push(first);
+                    first = second;
+                    s1.pop();
                     while (!s1.empty() && (s1.top() > first))
                     {
                         s3.push(first);
@@ -50,16 +50,20 @@ int main()
                         s1.pop();
                     }
                     s3.push(first);
+
                     while (!s3.empty())
                     {
                         s2.push(s3.top());
                         s3.pop();
                     }
-                    flag = 0;
+                    if (!s1.empty())
+                    {
+                        first = s1.top();
+                        s1.pop();
+                    }
                 }
             }
-            if (flag)
-                s2.push(first);
+            s2.push(first);
             v1.clear();
             for (int i = 0; i < N; i++)
             {
