@@ -48,7 +48,7 @@ int main()
                 }
                 else //字符
                 {
-                    if (Judgy(s.top(), '(')) //栈顶是左括号，左值，入栈
+                    if (s.empty() || Judgy(s.top(), '(')) //栈顶是左括号，左值，入栈
                         s.push(right);
                     else //栈顶是字符，右值，求和
                     {
