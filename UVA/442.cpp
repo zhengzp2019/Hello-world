@@ -29,7 +29,7 @@ int main()
         istringstream ss(str);
         stack<char> s;
         char left = 0, right = 0;
-        int sum = 0;
+        int sum = 0, ok = 1;
         while (ss >> right)
         {
             if (right == '(') //左括号
@@ -40,7 +40,8 @@ int main()
                 {
                     if (!Judgy(s.top(), '(')) //栈顶不是左括号，表达式错误
                     {
-                        out << "error" << endl;
+                        cout << "error" << endl;
+                        ok = 0;
                         break;
                     }
                     else //栈顶是左括号，弹出
@@ -56,16 +57,20 @@ int main()
                         s.pop();
                         if (column[left] != row[right]) //不满足矩阵乘法
                         {
-                            out << "error" << endl;
+                            cout << "error" << endl;
+                            ok = 0;
                             break;
                         }
                         else //满足矩阵乘法
+                        {
                             sum += row[left] * column[left] * column[right];
+                        }
                     }
                 }
             }
         }
-        out << sum << endl;
+        if (ok)
+            cout << sum << endl;
     }
     in.close();
     out.close();
