@@ -3,82 +3,72 @@
 #include <string>
 #include <stack>
 #include <sstream>
+#include <fstream>
 using namespace std;
 
-typedef struct Matrix
-{
-    int c;
-    int r;
-} Matrix;
-
 int n;
-map<char, Matrix> M;
+map<char, int> row, column;
 int Judgy(char left, char right);
 
 int main()
 {
-    cin >> n;
+    fstream in("442_in.txt");
+    fstream out("442_out.txt");
+    in >> n;
     char ch;
-    Matrix MT;
     //矩阵及维数初始化
     while (n--)
     {
-        cin >> ch;
-        cin >> M[ch].r >> M[ch].c;
+        in >> ch;
+        in >> row[ch] >> column[ch];
     }
-
     //读入表达式
-    string s;
-    while (getline(cin, s))
+    string str;
+    while (in>>str)
     {
-        istringstream ss;
+        istringstream ss(str);
         stack<char> s;
-        char left, right;
+        char left = 0, right = 0;
         int sum = 0;
         while (ss >> right)
         {
             if (right == '(') //左括号
-            {
                 s.push(right);
-            }
             else
             {
                 if (Judgy(right, ')')) //右括号
                 {
                     if (!Judgy(s.top(), '(')) //栈顶不是左括号，表达式错误
                     {
-                        cout << "error" << endl;
+                        out << "error" << endl;
                         break;
                     }
                     else //栈顶是左括号，弹出
-                    {
                         s.pop();
-                    }
                 }
                 else //字符
                 {
                     left = s.top();
                     if (Judgy(s.top(), '(')) //栈顶是左括号，左值，入栈
-                    {
                         s.push(right);
-                    }
                     else //栈顶是字符，右值，求和
                     {
-                        if (M[left].c != M[right].r) //不满足矩阵乘法
+                        if (column[left] != row[right]) //不满足矩阵乘法
                         {
-                            cout << "error" << endl;
+                            out << "error" << endl;
                             break;
                         }
                         else //满足矩阵乘法
-                        {
-                            sum += M[left].r * M[left].c * M[right].c;
-                        }
+                            sum += row[left] * column[left] * column[right];
                     }
                 }
             }
         }
-        cout << sum << endl;
+        out << sum << endl;
     }
+    in.close();
+    out.close();
+    return 0;
 }
 
 int Judgy(char left, char right)

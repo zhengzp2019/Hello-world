@@ -1,22 +1,16 @@
-#include <set>
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 using namespace std;
 
 int main()
 {
-    set<int> s1 = {1, 2, 3, 4, 5}, s2 = {1, 2, 3};
-    set<int> s;
-    for (set<int>::iterator p = s1.begin(); p != s1.end(); p++)
+    char s[100];
+    char ch = getchar();
+    scanf("%s", s);
+    while (sscanf(s, "%c", &ch))
     {
-        if (s2.find(*p) != s2.end())
-        {
-            s.insert(*p);
-        }
+        printf("%c\n", ch);
     }
-    for (set<int>::iterator p = s.begin(); p != s.end(); p++)
-    {
-        cout << *p << " ";
-    }
-    cout << endl;
     return 0;
 }
