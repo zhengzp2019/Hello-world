@@ -24,7 +24,7 @@ int main()
     }
     //读入表达式
     string str;
-    while (in>>str)
+    while (in >> str)
     {
         istringstream ss(str);
         stack<char> s;
@@ -48,11 +48,12 @@ int main()
                 }
                 else //字符
                 {
-                    left = s.top();
                     if (Judgy(s.top(), '(')) //栈顶是左括号，左值，入栈
                         s.push(right);
                     else //栈顶是字符，右值，求和
                     {
+                        left = s.top();
+                        s.pop();
                         if (column[left] != row[right]) //不满足矩阵乘法
                         {
                             out << "error" << endl;
