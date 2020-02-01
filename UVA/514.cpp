@@ -1,85 +1,53 @@
-#include <iostream>
-#include <vector>
+#include <cstdio>
 #include <stack>
+#define MAXN 100
 using namespace std;
-
-int N;
-vector<int> v0, v1;
+int N, target[MAXN];
 
 int main()
 {
-    while (cin >> N && N)
+    while (scanf("%d", &N) == 1 && N)
     {
-        v0.clear();
-        for (int i = 1; i <= N; i++)
+        while (scanf("%d", &target[1]) == 1 && target[1])
         {
-            v0.push_back(i);
-        }
-
-        int m;
-        while (cin >> m && m)
-        {
-            stack<int> s1, s2, s3;
-            for (int i = 1; i < N; i++)
+            stack<int> s;
+            int A = 1, B = 1; //入栈前车厢编号为A，入栈后车厢编号为target[B]
+            int ok = 1;
+            for (int i = 2; i <= N; i++)
             {
-                s1.push(m);
-                cin >> m;
+                scanf("%d", &target[i]);
             }
-            s1.push(m);
-            int first = s1.top();
-            s1.pop();
-            int second;
-            while (!s1.empty())
+            while (B <= N)
             {
-                second = s1.top();
-                if (first > second)
+                if (A == target[B])
                 {
-                    s2.push(first);
-                    first = second;
-                    s1.pop();
+                    A++;
+                    B++;
                 }
                 else
                 {
-                    s3.push(first);
-                    first = second;
-                    s1.pop();
-                    while (!s1.empty() && (s1.top() > first))
+                    if (!s.empty() && s.top() == target[B])
                     {
-                        s3.push(first);
-                        first = s1.top();
-                        s1.pop();
+                        s.pop();
+                        B++;
                     }
-                    s3.push(first);
-
-                    while (!s3.empty())
+                    else
                     {
-                        s2.push(s3.top());
-                        s3.pop();
-                    }
-                    if (!s1.empty())
-                    {
-                        first = s1.top();
-                        s1.pop();
+                        if (A <= N)
+                        {
+                            s.push(A++);
+                        }
+                        else
+                        {
+                            ok = 0;
+                            break;
+                        }
                     }
                 }
             }
-            s2.push(first);
-            v1.clear();
-            for (int i = 0; i < N; i++)
-            {
-                v1.push_back(s2.top());
-                s2.pop();
-            }
-            if (v1 == v0)
-            {
-                cout << "Yes\n";
-            }
-            else
-            {
-                cout << "No\n";
-            }
+            printf("%s", ok ? "Yes" : "No");
         }
-        cout << endl;
+        putchar('\n');
     }
     return 0;
 }
