@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <stack>
-#define MAXN 100
+#define MAXN 1000+5
 using namespace std;
 int N, target[MAXN];
 

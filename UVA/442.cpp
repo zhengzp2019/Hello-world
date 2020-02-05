@@ -1,90 +1,70 @@
 #include <iostream>
-#include <map>
 #include <string>
 #include <stack>
 #include <sstream>
-#include <fstream>
 using namespace std;
 
 int n;
-map<char, int> row, column;
-int Judgy(char left, char right);
+typedef struct Matrix
+{
+    int r;
+    int c;
+    Matrix(int r = 0, int c = 0) : r(r), c(c) {}
+} Matrix;
+Matrix M[26];
 
 int main()
 {
-    fstream in("442_in.txt");
-    fstream out("442_out.txt");
-    in >> n;
+    cin >> n;
     char ch;
     //矩阵及维数初始化
-    while (n--)
+    for (int i = 0; i < n; i++)
     {
-        in >> ch;
-        in >> row[ch] >> column[ch];
+        cin >> ch;
+        cin >> M[ch - 'A'].r >> M[ch - 'A'].c;
     }
     //读入表达式
     string str;
-    while (in >> str)
+    while (cin >> str)
     {
         istringstream ss(str);
-        stack<char> s;
-        char left = 0, right = 0;
+        stack<Matrix> s;
+        char ch = 0;
+        Matrix l, r;
         int sum = 0, ok = 1;
-        while (ss >> right)
+        while (ss >> ch)
         {
-            if (right == '(') //左括号
-                s.push(right);
+            if (ch == '(') //左括号
+                continue;
             else
             {
-                if (Judgy(right, ')')) //右括号
+                if (ch==')') //右括号
                 {
-                    if (!Judgy(s.top(), '(')) //栈顶不是左括号，表达式错误
+                    r = s.top();
+                    s.pop();
+                    l = s.top();
+                    s.pop();
+                    if (l.c!=r.r) //不满足矩阵乘法
                     {
                         cout << "error" << endl;
                         ok = 0;
                         break;
                     }
-                    else //栈顶是左括号，弹出
-                        s.pop();
-                }
-                else //字符
-                {
-                    if (s.empty() || Judgy(s.top(), '(')) //栈顶是左括号，左值，入栈
-                        s.push(right);
-                    else //栈顶是字符，右值，求和
+                    else //满足矩阵乘法
                     {
-                        left = s.top();
-                        s.pop();
-                        if (column[left] != row[right]) //不满足矩阵乘法
-                        {
-                            cout << "error" << endl;
-                            ok = 0;
-                            break;
-                        }
-                        else //满足矩阵乘法
-                        {
-                            sum += row[left] * column[left] * column[right];
-                        }
+                        sum += l.r * l.c * r.c;
+                        l.c = r.c;
+                        s.push(l);
                     }
+                }
+                else
+                {
+                    s.push(M[ch - 'A']);
                 }
             }
         }
         if (ok)
             cout << sum << endl;
     }
-    in.close();
-    out.close();
     return 0;
-}
-
-int Judgy(char left, char right)
-{
-    if (left == right)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
 }
