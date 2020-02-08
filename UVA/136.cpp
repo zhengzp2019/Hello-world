@@ -16,7 +16,7 @@ int main()
         pq.pop();
         if (i == 1500)
         {
-            cout <<"The 1500'th ugly number is "<< x << endl;
+            cout << "The 1500'th ugly number is " << x << '.' << endl;
             break;
         }
         for (size_t i = 0; i < 3; i++)

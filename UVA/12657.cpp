@@ -1,8 +1,5 @@
 #include <cstdio>
 #define MAXN 100000+100
-using namespace std;
-FILE *fp_out = fopen("output.txt", "w");
-FILE *fp_in = fopen("input.txt", "r");
 int left[MAXN], right[MAXN];
 void swap(int L, int R); //交换R和L的位置
 void Link(int L, int R); //连接R和L，R在L的右边
@@ -11,7 +8,7 @@ int main()
 {
     int kase = 1, n, m;
     int cmd;
-    while (fscanf(fp_in, "%d %d", &n, &m) == 2)
+    while (scanf("%d %d", &n, &m) == 2)
     {
         //链表初始化，用两个数组构建一个双向链表
         for (int i = 1; i <= n; i++)
@@ -26,13 +23,13 @@ int main()
         //输入命令，并处理
         while (m--)
         {
-            fscanf(fp_in, "%d", &cmd);
+            scanf("%d", &cmd);
             if (cmd == 4) //转置整条链
                 inv = !inv;
             else
             {
                 int X, Y;
-                fscanf(fp_in, "%d %d", &X, &Y);
+                scanf("%d %d", &X, &Y);
                 if (cmd == 3) //交换X和Y
                     swap(X, Y);
                 if (!inv)
@@ -79,7 +76,7 @@ int main()
                 L = left[L];
             }
         }
-        fprintf(fp_out, "Case %d: %lld\n", kase++, sum);
+        printf("Case %d: %lld\n", kase++, sum);
     }
     return 0;
 }
