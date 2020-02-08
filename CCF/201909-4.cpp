@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -15,15 +14,13 @@ typedef struct commodity
 int n, m, cmd, OPnum, OPask, type;
 commodity co = {0, 0, NULL};
 vector<commodity> a(m);
-fstream in("201909-4_in.txt");
-fstream out("201909-4_out.txt");
 void Op1(vector<commodity> &a); //insert
 void Op2(vector<commodity> &a); //delete
 void Op3(vector<commodity> &a); //print information
 
 int main()
 {
-    in >> m >> n;
+    cin >> m >> n;
     for (int i = 0; i < m; i++)
     {
         a.push_back(co);
@@ -31,7 +28,7 @@ int main()
     for (int i = 0; i < n; i++)
     {
         commodity *c = (commodity *)malloc(sizeof(commodity));
-        in >> c->id >> c->score;
+        cin >> c->id >> c->score;
         c->next = NULL;
         for (int i = 0; i < m; i++)
         {
@@ -50,10 +47,10 @@ int main()
             ci->next = q;
         }
     }
-    in >> OPnum;
+    cin >> OPnum;
     while (OPnum--)
     {
-        in >> cmd;
+        cin >> cmd;
         switch (cmd)
         {
         case 1:
@@ -69,15 +66,13 @@ int main()
             break;
         }
     }
-    in.close();
-    out.close();
     return 0;
 }
 
 void Op1(vector<commodity> &a)
 {
     commodity *cc = (commodity *)malloc(sizeof(commodity));
-    in >> type >> cc->id >> cc->score;
+    cin >> type >> cc->id >> cc->score;
     commodity *p, *q; //p指向最小的score比c->score大的商品
                       //q指向最大的score比c->score小的商品
     p = &a[type];
@@ -94,7 +89,7 @@ void Op1(vector<commodity> &a)
 void Op2(vector<commodity> &a)
 {
     int id;
-    in >> type >> id;
+    cin >> type >> id;
     commodity *p = &a[type], *q; //p指向编号为id的前一个商品，q指向编号为id的商品
     q = p->next;
     while (q != NULL && q->id != id)
@@ -111,14 +106,14 @@ void Op3(vector<commodity> &a)
     int K;
     vector<int> opt(m);
     vector<commodity> M(m);
-    in >> K;
+    cin >> K;
     for (int i = 0; i < m; i++)
-        in >> opt[i];
+        cin >> opt[i];
     for (int i = 0; i < m; i++)
     {
         if (K == 0)
         {
-            out << "-1\n";
+            cout << "-1\n";
             break;
         }
         vector<int> id;
@@ -134,14 +129,14 @@ void Op3(vector<commodity> &a)
         {
             if (first)
             {
-                out << *p;
+                cout << *p;
                 first = !first;
             }
             else
             {
-                out << " " << *p;
+                cout << " " << *p;
             }
         }
-        out << endl;
+        cout << endl;
     }
 }
