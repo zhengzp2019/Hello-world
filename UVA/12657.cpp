@@ -1,15 +1,15 @@
 #include <cstdio>
-#define MAXN 100000
+#define MAXN 100000+100
 using namespace std;
 FILE *fp_out = fopen("output.txt", "w");
 FILE *fp_in = fopen("input.txt", "r");
 int left[MAXN], right[MAXN];
-void swap(int L, int R);
-void Link(int L, int R);
+void swap(int L, int R); //交换R和L的位置
+void Link(int L, int R); //连接R和L，R在L的右边
 
 int main()
 {
-    int kase = 0, n, m;
+    int kase = 1, n, m;
     int cmd;
     while (fscanf(fp_in, "%d %d", &n, &m) == 2)
     {
@@ -33,19 +33,23 @@ int main()
             {
                 int X, Y;
                 fscanf(fp_in, "%d %d", &X, &Y);
-                if (inv == 3) //交换X和Y
+                if (cmd == 3) //交换X和Y
                     swap(X, Y);
                 if (!inv)
                     cmd = 3 - cmd;
                 int LX = left[X], RX = right[X], LY = left[Y], RY = right[Y];
                 if (cmd == 1) //X放在Y左边
                 {
+                    if (left[Y] == X)
+                        continue;
                     Link(LX, RX);
                     Link(LY, X);
                     Link(X, Y);
                 }
                 if (cmd == 2) //X放在y右边
                 {
+                    if (right[Y] == X)
+                        continue;
                     Link(LX, RX);
                     Link(X, RY);
                     Link(Y, X);
@@ -80,16 +84,36 @@ int main()
     return 0;
 }
 
-void swap(int L,int R)
+void swap(int L, int R)
 {
     int LL = left[L], RR = right[R], LR = right[L], RL = left[R];
-    Link(LL, R);
-    Link(L, RR);
-    Link(LR, R);
-    Link(L, RL);
+    if (left[R] == L)
+    {
+        Link(LL, R);
+        Link(L, RR);
+        right[R] = L;
+        left[L] = R;
+    }
+    else
+    {
+        if (right[R] == L)
+        {
+            Link(RL, L);
+            Link(R, LR);
+            right[L] = R;
+            left[R] = L;
+        }
+        else
+        {
+            Link(LL, R);
+            Link(L, RR);
+            Link(R, LR);
+            Link(RL, L);
+        }
+    }
 }
 
-void Link(int L,int R)
+void Link(int L, int R)
 {
     right[L] = R;
     left[R] = L;
