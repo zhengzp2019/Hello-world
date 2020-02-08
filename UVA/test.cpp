@@ -1,16 +1,10 @@
 #include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include<queue>
+#define maxn 5
 using namespace std;
-
+queue<int> q1, q2[maxn];
 int main()
 {
-    char s[100];
-    char ch = getchar();
-    scanf("%s", s);
-    while (sscanf(s, "%c", &ch))
-    {
-        printf("%c\n", ch);
-    }
+    
     return 0;
 }
