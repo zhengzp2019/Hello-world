@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <algorithm>
 using namespace std;
-const int MAXN = 100;
+const int MAXN = 10000+100;
 int a[MAXN];
 
 int main()
