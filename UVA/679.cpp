@@ -1,8 +1,5 @@
 #include <cstdio>
 #include <cstring>
-#include <cstdlib>
-const int maxn = 20;
-int a[1 << maxn]; //存储每个结点的开关情况，0为关，1为开
 
 int main()
 {
@@ -13,20 +10,21 @@ int main()
         while (l--)
         {
             scanf("%d%d", &D, &I);
-            int n = (1 << D) - 1, k = 1;
-            memset(a, 0, sizeof(a));
-            for (int i = 1; i <= I; i++)
+            int k = 1;
+            for (int i = 0; i < D - 1; i++)
             {
-                k = 1;
-                while (1)
+                if(I%2)
                 {
-                    a[k] = !a[k];
-                    k = a[k] ? 2 * k : 2 * k + 1;
-                    if (k > n)
-                        break;
+                    k = k * 2;
+                    I = (I + 1) / 2;
+                }
+                else
+                {
+                    k = k * 2 + 1;
+                    I /= 2;
                 }
             }
-            printf("%d\n", k / 2);
+            printf("%d\n", k);
         }
     }
     return 0;
