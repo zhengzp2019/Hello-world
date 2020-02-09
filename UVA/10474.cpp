@@ -20,7 +20,7 @@ int main()
         while (Q--)
         {
             scanf("%d", &x);
-            int p = find(a, a + N, x) - a;
+            int p = find(a, a + N, x) - a;//在数组（a,a+N）中查找元素x
             if (a[p] == x)
             {
                 printf("%d found at %d\n", x, p + 1);
