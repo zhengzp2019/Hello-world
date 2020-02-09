@@ -1,17 +1,24 @@
 #include <cstdio>
-#include <cstdlib>
-//FILE *in = fopen("input", "r");
-//FILE *out = fopen("output", "w");
-
-int mian()
+int main()
 {
-    int i, j; 
+    int i, j;
     while (scanf("%d%d", &i, &j) == 2)
     {
-        int max = 0;
-        for (int k = i; k <= j; k++)
+        int a, b;
+        if (i > j)
         {
-            int cnt = 1;
+            a = j;
+            b = i;
+        }
+        else
+        {
+            a = i;
+            b = j;
+        }
+        int max = 0;
+        for (int t = a; t <= b; t++)
+        {
+            int cnt = 1, k = t;
             while (k != 1)
             {
                 if (k % 2)
@@ -31,7 +38,5 @@ int mian()
         }
         printf("%d %d %d\n", i, j, max);
     }
-    //fclose(in);
-    //fclose(out);
     return 0;
 }
