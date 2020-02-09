@@ -15,7 +15,7 @@ int main()
         {
             scanf("%d", &a[i]);
         }
-        fprintf(out, "CASE# %d:\n", ++kase);
+        printf("CASE# %d:\n", ++kase);
         sort(a, a + N);
         int x;
         while (Q--)
