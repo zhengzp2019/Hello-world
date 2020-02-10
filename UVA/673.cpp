@@ -3,23 +3,23 @@
 #include <stack>
 #define MAXN 100
 using namespace std;
+void read(char *str, int *n); //读取每行的的字符串
+FILE *in = fopen("input", "r");
+FILE *out = fopen("output", "w");
 
 int main()
 {
-    //FILE *in = fopen("input", "r");
-    //FILE *out = fopen("output", "w");
     int n;
-    int kase = 0;
-    scanf("%d", &n);
-    //fgetc(in);
-    getchar();
+    fscanf(in, "%d", &n);
+    fgetc(in);
+    //getchar();
     while (n--)
     {
         char str[MAXN], ch;
-        scanf("%s", str);
-        printf("Case# %d: \n\t%s\n", ++kase, str);
         stack<char> s;
-        int t = strlen(str);
+        int t = 0;
+        read(str, &t);
+        //printf("Case# %d: \n\t%s\n", ++kase, str);
         int flag = 1;
         //扫描字符串
         for (int i = 0; i < t; i++)
@@ -51,9 +51,19 @@ int main()
         }
         if (!s.empty())
             flag = 0;
-        //printf("%s\n", flag ? "Yes" : "No");
+        fprintf(out, "%s\n", flag ? "Yes" : "No");
     }
-    //fclose(in);
-    //fclose(out);
+    fclose(in);
+    fclose(out);
     return 0;
+}
+
+void read(char *str, int *n)
+{
+    char ch;
+    while ((ch = fgetc(in)) && ch != '\n')
+    {
+        *(str++) = ch;
+        (*n)++;
+    }
 }
