@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstring>
 #include <stack>
-#define MAXN 100
+#define MAXN 1000
 using namespace std;
 void read(char *str, int *n); //读取每行的的字符串
 
