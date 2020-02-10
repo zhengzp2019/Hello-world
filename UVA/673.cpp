@@ -6,20 +6,23 @@ using namespace std;
 
 int main()
 {
-    FILE *in = fopen("input", "r");
-    FILE *out = fopen("output", "w");
+    //FILE *in = fopen("input", "r");
+    //FILE *out = fopen("output", "w");
     int n;
-    fscanf(in, "%d", &n);
-    fgetc(in);
+    int kase = 0;
+    scanf("%d", &n);
+    //fgetc(in);
+    getchar();
     while (n--)
     {
         char str[MAXN], ch;
-        fscanf(in, "%s", str);
+        scanf("%s", str);
+        printf("Case# %d: \n\t%s\n", ++kase, str);
         stack<char> s;
-        int n = strlen(str);
+        int t = strlen(str);
         int flag = 1;
         //扫描字符串
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < t; i++)
         {
             sscanf(&str[i], "%c", &ch);
             switch (ch)
@@ -48,9 +51,9 @@ int main()
         }
         if (!s.empty())
             flag = 0;
-        fprintf(out, "%s\n", flag ? "Yes" : "No");
+        //printf("%s\n", flag ? "Yes" : "No");
     }
-    fclose(in);
-    fclose(out);
+    //fclose(in);
+    //fclose(out);
     return 0;
 }
