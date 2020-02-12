@@ -1,23 +1,22 @@
+//预处理
 #include <cstdio>
-
-int f(int n, int A, int B);
+int a[55];
 
 int main()
 {
     int n, A, B;
     while (scanf("%d%d%d", &A, &B, &n) == 3 && (A | B | n))
     {
-        printf("%d\n", f(n, A, B));
+        for (int i = 1; i <= 49; i++)
+        {
+            if (i == 1 || i == 2)
+                a[i] = 1;
+            else
+            {
+                a[i] = (A * a[i - 1] + B * a[i - 2]) % 7;
+            }
+        }
+        printf("%d\n", a[(n - 1) % 49 + 1]);
     }
     return 0;
-}
-
-int f(int n, int A, int B)
-{
-    if (n == 1 || n == 2)
-        return 1;
-    else
-    {
-        return (A * f(n - 1, A, B) + B * f(n - 2, A, B)) % 7;
-    }
 }
