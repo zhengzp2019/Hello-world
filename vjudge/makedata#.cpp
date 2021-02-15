@@ -1,27 +1,24 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
-#define MAXN 100
+#define MAXN 10
 
 int main()
 {
-    int a, b, c, d, e, f;
+    int a, b;
     srand(time(NULL));
-    for(int i = 0; i < MAXN;)
+    printf("%d\n", MAXN);
+    for (int i = 0; i < MAXN; i++)
     {
-        a = rand() % 1000;
-        b = rand() % 500;
-        c = rand() % 300;
-        d = rand() % 200;
-        e = rand() % 100;
-        f = rand() % 50;
-        if (a + b * 2 + c * 3 + d * 5 + e * 10 + f * 20 > 1000)
-            continue;
-        else
+        a = rand() % 49 + 1;
+        b = rand() % 49 + 1;
+        if (a > b)
         {
-            ++i;
-            printf("%d %d %d %d %d %d\n", a, b, c, d, e, f);
+            int t = a;
+            a = b;
+            b = t;
         }
+        printf("%d %d\n", a, b);
     }
     return 0;
 }
