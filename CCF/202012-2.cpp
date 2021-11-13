@@ -2,43 +2,54 @@
 #include <algorithm>
 using namespace std;
 
-typedef pair<int, int> PII;
+struct elm
+{
+    int y;
+    int r;
+};
+
 const int N = 1e5 + 100;
+int perfix[N], suffix[N];
+elm a[N];
 int m;
 
-bool cmp(PII &a, PII &b)
+bool cmp(elm a, elm b)
 {
-    return a.first < b.first;
+    return a.y < b.y;
 }
 
 int main()
 {
-    scanf("%d", &m);
-    PII a[N];
-
+    cin.tie(0);
+    cin >> m;
     for (int i = 0; i < m; i++)
-        scanf("%d%d", &a[i].first, &a[i].second);
+        cin >> a[i].y >> a[i].r;
+
     sort(a, a + m, cmp);
 
-    int sum = 0;
-    int big = 0;
-    int mx;
-    for (int i = 0; i < m; i++)
-        if (a[i].second == 1)
-            sum++;
+    // 求第i个元素前面result==0的数目(不包括i)
+    for (int i = 1; i < m; i++)
+        perfix[i] = perfix[i - 1] + (a[i - 1].r == 0 ? 1 : 0);
 
-    mx = sum;
-    for (int i = 0; i < m; i++)
-        printf("%d-->%d\n", a[i].first, a[i].second);
-    for (int i = 0; i < m; i++)
+    // 求第i个元素后面1的数目(包括i)
+    for (int i = m - 1; i >= 0; i--)
+        suffix[i] = suffix[i + 1] + (a[i].r == 1 ? 1 : 0);
+
+    pair<int, int> res;
+    for (int i = 0; i < m;)
     {
-        a[i].second == 0 ? sum++ : sum--;
-        if (mx <= sum)
+        // cout << a[i].y << ' ' << perfix[i] + suffix[i] << endl;
+        if (perfix[i] + suffix[i] > res.first)
         {
-            mx = sum;
-            big = i + 1;
+            res.first = perfix[i] + suffix[i];
+            res.second = a[i].y;
         }
+        else if (perfix[i] + suffix[i] == res.first)
+            res.second = max(res.second, a[i].y);
+        do
+            i++;
+        while (i < m && a[i].y == a[i - 1].y);
     }
-    printf("%d\n", a[big].first);
+    cout << res.second << endl;
     return 0;
 }
